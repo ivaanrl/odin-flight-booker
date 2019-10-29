@@ -1,0 +1,38 @@
+<%= form_tag root_path, method: 'get' do %>
+  <div class="form-group">
+  <%= label_tag 'flight[departure_airport_id]', 'Departing from:' %>
+    <%= collection_select(:flight,:departure_airport_id,
+      Airport.all, :id, :name,{selected: @departure_airport}) %>
+  </div>
+  <br>
+  <div class ="form-group">
+    <%= label_tag 'flight[arribal_airport_id]', 'Arriving in:'%>
+    <%= collection_select(:flight, :arrival_airport_id,
+        Airport.all, :id, :name, {selected: @arribal_airport})%>
+  </div>
+  <div class = "form-group">
+    <%= label_tag 'booking[passengers]', 'Number of passengers:'%>
+    <%= select_tag('booking[passengers]',
+        options_for_select(1..4, selected = @num_passengers))%>
+  </div>
+  <div class = 'form-group'>
+    <%= label_tag 'flight[departure_date]', 'Departure date: '%>
+    
+  <%= date_field_tag('flight[departure_date]', value = @flight_date,
+      min: @first_date, max: @last_date) %>
+  </div>
+
+    <%= submit_tag "Search"%>
+<% end %>
+
+<% if @flights && !@flights.empty? %>
+  <%= form_tag new_booking_path, method:'get' do %>
+    <% @flights.each do |flight| %>
+      <%= flight.departure_time %>
+      <%= radio_button_tag :flight, flight.id, checked = @first%>
+      <br>
+     <% end %>
+     <%= hidden_field_tag :num_passengers, @num_passengers%>
+     <%= submit_tag "Select your flight!"%>
+  <% end %>
+<% end %>

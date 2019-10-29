@@ -1,0 +1,11 @@
+<h4>Flight details:</h4>
+Flight date: <%= @flight.departure_time%><br><br>
+Departure airport: <%= @flight.departure_airport.name%><br><br>
+Arrival airport: <%= @flight.arrival_airport.name%><br><br>
+
+<h4>Passengers list: </h4>
+<% @booking.passengers.each do |f| %>
+  <%= f.name%>
+  <%= f.email%>
+  <br><br>
+<% end %>
